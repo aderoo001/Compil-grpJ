@@ -11,4 +11,9 @@ public class StreeCHAR extends Stree {
 		this.value = value;
 	}
 
+	@Override
+	public String toString() {
+		return "StreeCHAR [value=" + value + "]";
+	}
+
 }
