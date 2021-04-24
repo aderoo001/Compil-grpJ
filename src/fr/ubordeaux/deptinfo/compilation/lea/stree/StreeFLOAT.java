@@ -18,8 +18,9 @@ public class StreeFLOAT extends Stree {
 	public StreeFLOAT(Float value) throws TypeException, StreeException {
 		super();
 		this.value = value;
-		this.exp = new CONST(value);
-		this.type = new TypeExpression(Tag.INTEGER);
+		int val = Math.round(value);
+		this.exp = new CONST(val);
+		this.type = new TypeExpression(Tag.FLOAT);
 	}
 
 	@Override
