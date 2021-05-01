@@ -380,46 +380,46 @@ interface_definition:
 	;
 	
 interface_definition_head:
-	"procedure" IDENTIFIER '(' args_definition ')' ';' { $$ = new TypeExpression(Tag.FUNCTION); }
+	"procedure" IDENTIFIER '(' args_definition ')' ';' 			{ $$ = new TypeExpression(Tag.FUNCTION); }
 	| "function" IDENTIFIER '(' args_definition ')' ':' type_expression ';' { $$ = new TypeExpression(Tag.FUNCTION); }
 	;
 
 type_expression:
-	"char"											{$$ = new TypeExpression(Tag.CHAR);}
-	| "integer"									{$$ = new TypeExpression(Tag.INTEGER);}
-	| "float"										{$$ = new TypeExpression(Tag.FLOAT);}
-	| "boolean"									{$$ = new TypeExpression(Tag.BOOLEAN);}
-	| "string"										{$$ = new TypeExpression(Tag.STRING);}
-	| "enum" '<' type_names '>'						{$$ = new TypeExpression(Tag.ENUM, $3);}
-	| "range" '<' type_expression '>'						{$$ = new TypeExpression(Tag.RANGE, $3);}
-	| "list" '<' type_expression '>'				{$$ = new TypeExpression(Tag.LIST, $3);}
+	"char"							{$$ = new TypeExpression(Tag.CHAR);}
+	| "integer"						{$$ = new TypeExpression(Tag.INTEGER);}
+	| "float"						{$$ = new TypeExpression(Tag.FLOAT);}
+	| "boolean"						{$$ = new TypeExpression(Tag.BOOLEAN);}
+	| "string"						{$$ = new TypeExpression(Tag.STRING);}
+	| "enum" '<' type_names '>'				{$$ = new TypeExpression(Tag.ENUM, $3);}
+	| "range" '<' type_expression '>'			{$$ = new TypeExpression(Tag.RANGE, $3);}
+	| "list" '<' type_expression '>'			{$$ = new TypeExpression(Tag.LIST, $3);}
 	| "set" '<' type_expression '>'				{$$ = new TypeExpression(Tag.SET, $3);}
 	| "map" '<' type_expression ',' type_expression '>'	{$$ = new TypeExpression(Tag.MAP, $3, $5);}
-	| type_expression_class								{$$ = $1;}
+	| type_expression_class					{$$ = $1;}
 	;
 	
 type_expression_class:
-	IDENTIFIER '<' type_expressions '>'		{$$ = new TypeExpression(Tag.CLASS, $3, $1);}
-	| IDENTIFIER	 						{$$ = new TypeExpression(Tag.CLASS, $1);}
+	IDENTIFIER '<' type_expressions '>'			{$$ = new TypeExpression(Tag.CLASS, $3, $1);}
+	| IDENTIFIER	 					{$$ = new TypeExpression(Tag.CLASS, $1);}
 	;
 	
 type_expressions:
-	type_expressions ',' type_expression						{$$ = new TypeExpression(Tag.PRODUCT, $1, $3);}
-	| type_expression									{$$ = $1;}
+	type_expressions ',' type_expression			{$$ = new TypeExpression(Tag.PRODUCT, $1, $3);}
+	| type_expression					{$$ = $1;}
 	;
 	
 type_names:
-	type_names ',' type_name						{$$ = new TypeExpression(Tag.PRODUCT, $1, $3);}
-	| type_name									{$$ = $1;}
+	type_names ',' type_name				{$$ = new TypeExpression(Tag.PRODUCT, $1, $3);}
+	| type_name						{$$ = $1;}
 	;
 	
 type_name:
-	IDENTIFIER									{$$ = new TypeExpression(Tag.NAME, $1);}
+	IDENTIFIER						{$$ = new TypeExpression(Tag.NAME, $1);}
 	;
 	
 args_definition:
-	args_definition ',' arg_definition {$$ = new TypeExpression(Tag.PRODUCT, $1, $3);}
-	| arg_definition {$$ = $1;}
+	args_definition ',' arg_definition			{$$ = new TypeExpression(Tag.PRODUCT, $1, $3);}
+	| arg_definition			 		{$$ = $1;}
 	;	
 	
 arg_definition:
@@ -430,7 +430,7 @@ arg_definition:
 	;	
 	
 block:
-	'{' var_definitions stms '}' { $$ = $3; }
+	'{' var_definitions stms '}' 				{ $$ = $3; }
 	;
 	
 var_definitions:
@@ -439,52 +439,52 @@ var_definitions:
 	;
 	
 var_definition:
-	IDENTIFIER ':' type_expression ';' { localVarEnvironment.put($1, $3); }
+	IDENTIFIER ':' type_expression ';' 			{ localVarEnvironment.put($1, $3); }
 	;
 	
 stms:
-	stms stm { $$ = new StreeSEQ($1, $2); }
-	| stm { $$ = $1; }
+	stms stm 						{ $$ = new StreeSEQ($1, $2); }
+	| stm 							{ $$ = $1; }
 	;
 	
 stm:
 	simple_stm ';' { $$ = $1; }
-	| "if" '(' expression ')' stm %prec WITHOUT_ELSE { $$ = new StreeIF($3, new StreeTHENELSE($5)); }
-	| "if" '(' expression ')' stm "else" stm { $$ = new StreeIF($3, new StreeTHENELSE($5, $7)); }
-	| "while" '(' expression ')' stm { $$ = new StreeWHILE($3, $5); }
-	| "do" stm WHILE '(' expression ')' ';' { $$ = new StreeDO($2, $5); }
-	| "for" '(' assigned_variable ':' expression ')' stm { $$ = new StreeFOR($3, $5); }
+	| "if" '(' expression ')' stm %prec WITHOUT_ELSE 	{ $$ = new StreeIF($3, new StreeTHENELSE($5)); }
+	| "if" '(' expression ')' stm "else" stm 		{ $$ = new StreeIF($3, new StreeTHENELSE($5, $7)); }
+	| "while" '(' expression ')' stm 			{ $$ = new StreeWHILE($3, $5); }
+	| "do" stm WHILE '(' expression ')' ';' 		{ $$ = new StreeDO($2, $5); }
+	| "for" '(' assigned_variable ':' expression ')' stm 	{ $$ = new StreeFOR($3, $5); }
 	| "for" '(' assignment_stm ';' expression ';' simple_stm ')' stm { $$ = new StreeFOR($3, new StreeFORCONT($5, $7)); }
-	| "foreach" assigned_variable "in" expression stm { $$ = new StreeFOREACH($2, new StreeFOREACHCONT($4, $5)); }
-	| block { $$ = $1; }
+	| "foreach" assigned_variable "in" expression stm 	{ $$ = new StreeFOREACH($2, new StreeFOREACHCONT($4, $5)); }
+	| block 						{ $$ = $1; }
 	;
 
 assignment_stm:
-	assigned_variable ":=" expression { $$ = new StreeAFF($1, $3); }
-	| IDENTIFIER ':' type_expression ":=" expression { localVarEnvironment.put($1, $3); $$ = new StreeAFF(new StreeVARIABLE($1, $3), $5); }
+	assigned_variable ":=" expression 			{ $$ = new StreeAFF($1, $3); }
+	| IDENTIFIER ':' type_expression ":=" expression 	{ localVarEnvironment.put($1, $3); $$ = new StreeAFF(new StreeVARIABLE($1, $3), $5); }
 	;
 
 simple_stm:
-	assignment_stm { $$ = $1; }
-	| assigned_variable "++" { $$ = new StreeSUCC($1, StreeSUCC.RIGHT); }
-	| assigned_variable "--" { $$ = new StreeDEC($1, StreeDEC.RIGHT); }
-	| assigned_variable "+=" expression { $$ = new StreePLUSAFF($1, $3); }
-	| assigned_variable "-=" expression { $$ = new StreeMINUSAFF($1, $3); }
-	| assigned_variable "*=" expression { $$ = new StreeTIMESAFF($1, $3); }
-	| assigned_variable "/=" expression { $$ = new StreeDIVAFF($1, $3); }
-	| assigned_variable "||=" expression { $$ = new StreeORAFF($1, $3); }
-	| assigned_variable "&&=" expression { $$ = new StreeANDAFF($1, $3); }
-	| assigned_variable "&=" expression { $$ = new StreeBANDAFF($1, $3); }
-	| assigned_variable "|=" expression { $$ = new StreeBORAFF($1, $3); }
-	| assigned_variable "<<=" expression { $$ = new StreeLSHIFTAFF($1, $3); }
-	| assigned_variable ">>=" expression { $$ = new StreeRSHIFTAFF($1, $3); }
-	| method_name '(' args ')' { $$ = new StreeCALL($1, $3); }
-	| "readln" '(' expression ')' { $$ = new StreeCALL(new StreeMETHOD("readln"), new StreeARGS($3)); }
-	| "write" '(' expression ')' { $$ = new StreeCALL(new StreeMETHOD("write"), new StreeARGS($3)); }
-	| "writeln" '(' expression ')' { $$ = new StreeCALL(new StreeMETHOD("writeln"), new StreeARGS($3)); }
-	| "break" { $$ = new StreeBREAK(); }
-	| "continue" { $$ = new StreeCONTINUE(); }
-	| "return" expression { $$ = new StreeRETURN($2); }
+	assignment_stm 						{ $$ = $1; }
+	| assigned_variable "++" 				{ $$ = new StreeSUCC($1, StreeSUCC.RIGHT); }
+	| assigned_variable "--" 				{ $$ = new StreeDEC($1, StreeDEC.RIGHT); }
+	| assigned_variable "+=" expression 			{ $$ = new StreePLUSAFF($1, $3); }
+	| assigned_variable "-=" expression 			{ $$ = new StreeMINUSAFF($1, $3); }
+	| assigned_variable "*=" expression 			{ $$ = new StreeTIMESAFF($1, $3); }
+	| assigned_variable "/=" expression 			{ $$ = new StreeDIVAFF($1, $3); }
+	| assigned_variable "||=" expression 			{ $$ = new StreeORAFF($1, $3); }
+	| assigned_variable "&&=" expression 			{ $$ = new StreeANDAFF($1, $3); }
+	| assigned_variable "&=" expression 			{ $$ = new StreeBANDAFF($1, $3); }
+	| assigned_variable "|=" expression 			{ $$ = new StreeBORAFF($1, $3); }
+	| assigned_variable "<<=" expression 			{ $$ = new StreeLSHIFTAFF($1, $3); }
+	| assigned_variable ">>=" expression 			{ $$ = new StreeRSHIFTAFF($1, $3); }
+	| method_name '(' args ')' 				{ $$ = new StreeCALL($1, $3); }
+	| "readln" '(' expression ')' 				{ $$ = new StreeCALL(new StreeMETHOD("readln"), new StreeARGS($3)); }
+	| "write" '(' expression ')' 				{ $$ = new StreeCALL(new StreeMETHOD("write"), new StreeARGS($3)); }
+	| "writeln" '(' expression ')' 				{ $$ = new StreeCALL(new StreeMETHOD("writeln"), new StreeARGS($3)); }
+	| "break" 						{ $$ = new StreeBREAK(); }
+	| "continue" 						{ $$ = new StreeCONTINUE(); }
+	| "return" expression 					{ $$ = new StreeRETURN($2); }
 	//| error ';'
 	//| error YYEOF
 	;
@@ -535,56 +535,56 @@ method_name:
 			throw new EnvironmentException("unknown variable " + $1);
 		$$ = new StreeMETHOD($1, type);
 	}
-	| assigned_variable '.' IDENTIFIER { $$ = new StreeSLOT($1, $3); }
+	| assigned_variable '.' IDENTIFIER 			{ $$ = new StreeSLOT($1, $3); }
 	;
 
 args:
-	args ',' expression {$$ = new StreeARGS($1, $3);}
-	| expression { $$ = $$ = new StreeARGS($1, null);}
+	args ',' expression 					{ $$ = new StreeARGS($1, $3);}
+	| expression 						{ $$ = $$ = new StreeARGS($1, null);}
 	;
 	
 const_expression:
-	"null" {$$ = new StreeNULL(); }
-	| CONSTANT_INTEGER {$$ = new StreeINTEGER($1); }
-	| CONSTANT_FLOAT {$$ = new StreeFLOAT($1); }
-	| CONSTANT_CHAR  {$$ = new StreeCHAR($1); }
-	| CONSTANT_STRING  {$$ = new StreeSTRING($1); }
-	| '[' const_expression DOTS const_expression ']' {$$ = new StreeRANGE($2, $4); }
+	"null" 							{ $$ = new StreeNULL(); }
+	| CONSTANT_INTEGER 					{ $$ = new StreeINTEGER($1); }
+	| CONSTANT_FLOAT 					{ $$ = new StreeFLOAT($1); }
+	| CONSTANT_CHAR  					{ $$ = new StreeCHAR($1); }
+	| CONSTANT_STRING  					{ $$ = new StreeSTRING($1); }
+	| '[' const_expression DOTS const_expression ']' 	{ $$ = new StreeRANGE($2, $4); }
 	;
 	
 expression:
 	const_expression 					{ $$ = $1; }
-	| assigned_variable			{ $$ = $1; }
-	| method_name '(' args ')'	{ $$ = new StreeCALL($1, $3); }
-	| "new" type_expression_class '(' args_opt ')'			{ $$ = new StreeNEW($2, $4); }
+	| assigned_variable					{ $$ = $1; }
+	| method_name '(' args ')'				{ $$ = new StreeCALL($1, $3); }
+	| "new" type_expression_class '(' args_opt ')'		{ $$ = new StreeNEW($2, $4); }
 	| expression "&&" expression				{ $$ = new StreeAND($1, $3); }
 	| expression "||" expression				{ $$ = new StreeOR($1, $3); }
 	| '!' expression					{ $$ = new StreeNOT($2); }
 	| expression '<' expression				{ $$ = new StreeLT($1, $3); }
-	| expression "<=" expression			{ $$ = new StreeLE($1, $3); }
+	| expression "<=" expression				{ $$ = new StreeLE($1, $3); }
 	| expression '>' expression				{ $$ = new StreeGT($1, $3); }
-	| expression ">=" expression			{ $$ = new StreeGE($1, $3); }
-	| expression "==" expression			{ $$ = new StreeEQ($1, $3); }
-	| expression "!=" expression			{ $$ = new StreeNE($1, $3); }
-	| expression '+' expression 			{ $$ = new StreePLUS($1, $3); }
-	| expression '-' expression			    { $$ = new StreeMINUS($1, $3); }
-	| '-' expression %prec UMINUS		{ $$ = new StreeMINUS($2); }
-	| expression '*' expression 			{ $$ = new StreeTIMES($1, $3); }
-	| expression '/' expression			    { $$ = new StreeDIV($1, $3); }
-	| expression "++" 				{ $$ = new StreeSUCC($1, StreeSUCC.RIGHT); }
+	| expression ">=" expression				{ $$ = new StreeGE($1, $3); }
+	| expression "==" expression				{ $$ = new StreeEQ($1, $3); }
+	| expression "!=" expression				{ $$ = new StreeNE($1, $3); }
+	| expression '+' expression 				{ $$ = new StreePLUS($1, $3); }
+	| expression '-' expression			  	{ $$ = new StreeMINUS($1, $3); }
+	| '-' expression %prec UMINUS				{ $$ = new StreeMINUS($2); }
+	| expression '*' expression 				{ $$ = new StreeTIMES($1, $3); }
+	| expression '/' expression			    	{ $$ = new StreeDIV($1, $3); }
+	| expression "++" 					{ $$ = new StreeSUCC($1, StreeSUCC.RIGHT); }
 	| expression "--"					{ $$ = new StreeDEC($1, StreeDEC.RIGHT); }
 	| "++" expression %prec LEFTPLUSPLUS			{ $$ = new StreeSUCC($2, StreeSUCC.LEFT); }
-	| "--" expression %prec LEFTMINUSMINUS		{ $$ = new StreeDEC($2, StreeDEC.LEFT); }
-	| expression '&' expression			{ $$ = new StreeAND($1, $3); }
-	| expression '|' expression			{ $$ = new StreeOR($1, $3); }
-	| expression "<<" expression		{ $$ = new StreeLSHIFT($1, $3); }
-	| expression ">>" expression		{ $$ = new StreeRSHIFT($1, $3); }
-	| '(' expression ')'			{$$ = $2;}
+	| "--" expression %prec LEFTMINUSMINUS			{ $$ = new StreeDEC($2, StreeDEC.LEFT); }
+	| expression '&' expression				{ $$ = new StreeAND($1, $3); }
+	| expression '|' expression				{ $$ = new StreeOR($1, $3); }
+	| expression "<<" expression				{ $$ = new StreeLSHIFT($1, $3); }
+	| expression ">>" expression				{ $$ = new StreeRSHIFT($1, $3); }
+	| '(' expression ')'					{ $$ = $2;}
 	;
 
 args_opt:
-	%empty {$$ = null;}
-	| args {$$ = $1;}
+	%empty 							{ $$ = null; }
+	| args 							{ $$ = $1; }
 	;
 
 	
