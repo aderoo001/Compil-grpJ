@@ -5,14 +5,14 @@ import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Exp;
 import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
 
-public class StreeNOT extends Stree {
+public class StreeBAND extends Stree {
 
-	private Exp exp;
+	private BINOP exp;
 	private Type type;
 
-	public StreeNOT(Stree left) throws StreeException, TypeException {
-		super(left);
-		this.exp = new BINOP(BINOP.Code.NOT, left.getExp(), null);
+	public StreeBAND(Stree left, Stree right) throws StreeException, TypeException {
+		super(left, right);
+		this.exp = new BINOP(BINOP.Code.BAND, left.getExp(), right.getExp());
 	}
 
 	@Override
@@ -28,10 +28,10 @@ public class StreeNOT extends Stree {
 	@Override
 	public boolean checkType() throws StreeException {
 		Type typeLeft = getLeft().getType();
-		
+		Type typeRight = getRight().getType();
 		type = typeLeft;
-		if ((typeLeft != null))
-			return typeLeft.assertBoolean(); // pas sure de assertBoolean ici
+		if ((typeLeft != null) && (typeRight != null))
+			return typeLeft.assertEqual(typeRight);
 		else
 			throw new StreeException("Type error while checking null types !");
 	}
