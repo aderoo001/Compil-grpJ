@@ -5,10 +5,35 @@ import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
 public class StreeCHAR extends Stree {
 
 	private Integer value;
+	private Exp exp;
+	private Type type;
 
 	public StreeCHAR(Integer value) throws TypeException, StreeException {
 		super();
 		this.value = value;
+		int val = Math.round(value);
+		this.exp = new CONST(val);
+		this.type = new TypeExpression(Tag.CHAR);
 	}
+
+	@Override
+	public String toString() {
+		return "StreeCHAR [value=" + value + "]";
+	}
+
+	@Override
+	public Exp getExp(){
+		return exp;
+	}
+	
+	@Override
+	public boolean checkType() {
+		return true;
+	}
+
+	public Type getType() throws StreeException {
+		return type;
+	}
+
 
 }
