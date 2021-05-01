@@ -2,13 +2,12 @@ package fr.ubordeaux.deptinfo.compilation.lea.stree;
 
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.BINOP;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Exp;
-import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
-import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
+import fr.ubordeaux.deptinfo.compilation.lea.type.*;
 
 public class StreeEQ extends Stree {
 
 	private BINOP exp;
-	private Type type;
+
 
 	public StreeEQ(Stree left, Stree right) throws StreeException, TypeException {
 		super(left, right);
@@ -21,15 +20,14 @@ public class StreeEQ extends Stree {
 	}
 
 	@Override
-	public Type getType() throws StreeException {
-		return type;
+	public Type getType(){
+		return new TypeExpression(Tag.BOOLEAN);
 	}
 
 	@Override
 	public boolean checkType() throws StreeException {
 		Type typeLeft = getLeft().getType();
 		Type typeRight = getRight().getType();
-		type = typeLeft;
 		if ((typeLeft != null) && (typeRight != null))
 			return typeLeft.assertEqual(typeRight);
 		else

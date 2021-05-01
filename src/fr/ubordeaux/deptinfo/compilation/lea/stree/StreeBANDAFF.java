@@ -10,7 +10,7 @@ public class StreeBANDAFF extends Stree {
 
 	public StreeBANDAFF(Stree left, Stree right) throws TypeException, StreeException {
 		super(left, right);
-		this.stm = new MOVE(left.getExp(), (new StreeBANDAFF(left, right)).getExp() );
+		this.stm = new MOVE(left.getExp(), (new StreeAND(left, right)).getExp() );
 	}
 
 	@Override
