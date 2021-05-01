@@ -21,8 +21,8 @@ public class StreeLE extends Stree {
 	}
 
 	@Override
-	public Type getType() throws StreeException {
-		return type;
+	public Type getType(){
+		return new TypeExpression(Tag.BOOLEAN);
 	}
 
 	@Override
