@@ -1,7 +1,9 @@
 package fr.ubordeaux.deptinfo.compilation.lea.stree;
 
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.CONST;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Exp;
+import fr.ubordeaux.deptinfo.compilation.lea.intermediate.CONST;
+import fr.ubordeaux.deptinfo.compilation.lea.intermediate.NAME;
+import fr.ubordeaux.deptinfo.compilation.lea.intermediate.temp.Label;
 import fr.ubordeaux.deptinfo.compilation.lea.type.Tag;
 import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
