@@ -18,4 +18,8 @@ public class StreeLT extends Stree {
 		return exp;
 	}
 
+	@Override
+	public boolean checkType() throws StreeException {
+		return true;
+	}
 }

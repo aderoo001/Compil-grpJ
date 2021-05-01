@@ -13,4 +13,8 @@ public class StreeSUCC extends Stree {
 		this.rank = rank;
 	}
 
+	@Override
+	public boolean checkType() throws StreeException {
+		return true;
+	}
 }

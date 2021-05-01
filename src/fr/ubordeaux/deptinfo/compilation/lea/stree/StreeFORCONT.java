@@ -8,4 +8,8 @@ public class StreeFORCONT extends Stree {
 		super(left, right);
 	}
 
+	@Override
+	public boolean checkType() throws StreeException {
+		return true;
+	}
 }
