@@ -6,16 +6,23 @@ import fr.ubordeaux.deptinfo.compilation.lea.type.*;
 
 public class StreePLUSAFF extends Stree {
 
-	private Stm stm;
+	private final Stm stm;
+	private final Type type;
 
 	public StreePLUSAFF(Stree left, Stree right) throws TypeException, StreeException {
 		super(left, right);
 		this.stm = new MOVE(left.getExp(), (new StreePLUS(left, right)).getExp() );
+		this.type = new TypeExpression(Tag.SET);
 	}
 
 	@Override
 	public Stm getStm(){
 		return stm;
+	}
+
+	@Override
+	public Type getType() {
+		return type;
 	}
 
 	@Override

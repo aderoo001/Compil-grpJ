@@ -19,11 +19,6 @@ public class StreePLUS extends Stree {
 	public Exp getExp(){
 		return exp;
 	}
-	
-	@Override
-	public Type getType() throws StreeException {
-		return type;
-	}
 
 	@Override
 	public boolean checkType() throws StreeException {

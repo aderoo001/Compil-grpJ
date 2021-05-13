@@ -449,14 +449,14 @@ stms:
 	
 stm:
 	simple_stm ';' { $$ = $1; }
-	| "if" '(' expression ')' stm %prec WITHOUT_ELSE 	{ $$ = new StreeIF($3, new StreeTHENELSE($5)); }
-	| "if" '(' expression ')' stm "else" stm 		{ $$ = new StreeIF($3, new StreeTHENELSE($5, $7)); }
-	| "while" '(' expression ')' stm 			{ $$ = new StreeWHILE($3, $5); }
-	| "do" stm WHILE '(' expression ')' ';' 		{ $$ = new StreeDO($2, $5); }
-	| "for" '(' assigned_variable ':' expression ')' stm 	{ $$ = new StreeFOR($3, $5); }
-	| "for" '(' assignment_stm ';' expression ';' simple_stm ')' stm { $$ = new StreeFOR($3, new StreeFORCONT($5, $7)); }
-	| "foreach" assigned_variable "in" expression stm 	{ $$ = new StreeFOREACH($2, new StreeFOREACHCONT($4, $5)); }
-	| block 						{ $$ = $1; }
+	| "if" '(' expression ')' stm %prec WITHOUT_ELSE 			{ $$ = new StreeIF($3, new StreeTHENELSE($5)); }
+	| "if" '(' expression ')' stm "else" stm 				{ $$ = new StreeIF($3, new StreeTHENELSE($5, $7)); }
+	| "while" '(' expression ')' stm 					{ $$ = new StreeWHILE($3, $5); }
+	| "do" stm WHILE '(' expression ')' ';' 				{ $$ = new StreeDO($2, $5); }
+	| "for" '(' assigned_variable ':' expression ')' stm 			{ $$ = new StreeFOR($3, new StreeFORCONT($5, $7)); }
+	| "for" '(' assignment_stm ';' expression ';' simple_stm ')' stm 	{ $$ = new StreeFOR($3, new StreeFORCONT($5, new StreeFORCONT($7, $9))); }
+	| "foreach" assigned_variable "in" expression stm 			{ $$ = new StreeFOREACH($2, new StreeFOREACHCONT($4, $5)); }
+	| block 								{ $$ = $1; }
 	;
 
 assignment_stm:
