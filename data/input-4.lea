@@ -1,0 +1,8 @@
+class main {
+
+	main(args: list<string>) {
+		i: integer;
+        i:= 1&3;
+	}
+ 
+}

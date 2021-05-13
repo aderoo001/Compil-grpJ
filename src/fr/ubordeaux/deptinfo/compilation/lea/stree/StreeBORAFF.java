@@ -10,7 +10,7 @@ public class StreeBORAFF extends Stree {
 
 	public StreeBORAFF(Stree left, Stree right) throws TypeException, StreeException {
 		super(left, right);
-		this.stm = new MOVE(left.getExp(), (new StreeBORAFF(left, right)).getExp() );
+		this.stm = new MOVE(left.getExp(), (new StreeOR(left, right)).getExp() );
 	}
 
 	@Override

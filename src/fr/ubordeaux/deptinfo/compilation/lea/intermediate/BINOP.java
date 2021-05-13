@@ -4,7 +4,7 @@ public class BINOP extends Exp {
 
 	public enum Code {
 		PLUS("+"), MINUS("-"), MUL("*"), DIV("/"), AND("&&"), OR("||"), LSHIFT("<<"), RSHIFT(">>"), LT("<"), LE("<="),
-		GT(">"), GE(">="), EQ("=="), NOT("!"), NE("!="), BAND("&"), BOR("|");
+		GT(">"), GE(">="), EQ("=="), NOT("!"), NE("!=");
 
 		private String memo;
 
