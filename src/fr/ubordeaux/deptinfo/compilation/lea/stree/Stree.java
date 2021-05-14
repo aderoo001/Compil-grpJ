@@ -106,7 +106,7 @@ public abstract class Stree {
 		throw new StreeException("Not yet implemented: getExpList() in " + this.getClass().getSimpleName());
 	}
 
-	public Stm generateIntermediateCode() throws StreeException {
+	public Stm generateIntermediateCode() throws StreeException, TypeException {
 		throw new StreeException("Not yet implemented: generateIntermediateCode() in " + this.getClass().getSimpleName());
 	}
 

@@ -21,6 +21,11 @@ public class StreePLUS extends Stree {
 	}
 
 	@Override
+	public Type getType() throws StreeException {
+		return type;
+	}
+
+	@Override
 	public boolean checkType() throws StreeException {
 		Type typeLeft = getLeft().getType();
 		Type typeRight = getRight().getType();

@@ -50,6 +50,7 @@ public class StreeFORCONT extends Stree {
 					)
 			);
 		} else if (this.getRight()
+				.getLeft()
 				.getType()
 				.getTag()
 				.equals(Tag.SET)) {

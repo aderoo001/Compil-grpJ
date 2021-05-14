@@ -11,7 +11,7 @@ public class StreePLUSAFF extends Stree {
 
 	public StreePLUSAFF(Stree left, Stree right) throws TypeException, StreeException {
 		super(left, right);
-		this.stm = new MOVE(left.getExp(), (new StreePLUS(left, right)).getExp() );
+		this.stm = new MOVE(left.getExp(), new StreePLUS(left, right).getExp() );
 		this.type = new TypeExpression(Tag.SET);
 	}
 

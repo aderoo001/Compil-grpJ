@@ -39,14 +39,13 @@ public class StreeSUCC extends Stree {
 	}
 
 	@Override
-	public Stm generateIntermediateCode() throws StreeException {
+	public Stm generateIntermediateCode() throws StreeException, TypeException {
 		return new MOVE(
 				getLeft().getExp(),
-				new BINOP(
-						BINOP.Code.PLUS,
-						getLeft().getExp(),
-						new CONST(1)
-				)
+				new StreePLUS(
+						getLeft(),
+						new StreeINTEGER(1)
+				).getExp()
 		);
 	}
 
