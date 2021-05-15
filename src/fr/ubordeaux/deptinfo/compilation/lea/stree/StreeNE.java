@@ -15,7 +15,12 @@ public class StreeNE extends Stree {
 	public StreeNE(Stree left, Stree right) throws StreeException, TypeException {
 		super(left, right);
 		this.exp = new BINOP(BINOP.Code.NE, left.getExp(), right.getExp());
-		this.type = new TypeExpression(Tag.BOOLEAN, this.exp.getDotLabel());
+		this.type = new TypeExpression(
+				Tag.BOOLEAN,
+				this.exp.getDotLabel(),
+				left.getType(),
+				left.getType()
+		);
 	}
 
 	@Override
