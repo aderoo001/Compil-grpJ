@@ -5,11 +5,18 @@ import fr.ubordeaux.deptinfo.compilation.lea.type.*;
 
 public class StreeAFF extends Stree {
 
-	private Stm stm;
+	private final Stm stm;
+	private final Type type;
 
 	public StreeAFF(Stree left, Stree right) throws StreeException, TypeException {
 		super(left, right);
 		this.stm = new MOVE(left.getExp(), right.getExp());
+		this.type = new TypeExpression(Tag.SET);
+	}
+
+	@Override
+	public Type getType() throws StreeException {
+		return type;
 	}
 
 	@Override

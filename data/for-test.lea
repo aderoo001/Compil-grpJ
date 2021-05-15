@@ -1,0 +1,8 @@
+class main {
+	main(args: list<string>) {
+	    tst: integer := 0;
+		for(i:integer := 0; i == 10; i += 1) {
+		    tst += i;
+		}
+	}
+}

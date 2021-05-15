@@ -38,6 +38,4 @@ public class StreeINTEGER extends Stree {
 	public Type getType() throws StreeException {
 		return type;
 	}
-
-
 }
