@@ -19,6 +19,7 @@ public class StreeTIMES extends Stree {
 	public Exp getExp(){
 		return exp;
 	}
+
 	@Override
 	public Type getType() throws StreeException {
 		return type;
