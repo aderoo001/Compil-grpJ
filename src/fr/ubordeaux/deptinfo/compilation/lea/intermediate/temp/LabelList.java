@@ -9,6 +9,14 @@ public class LabelList {
 		this.tail = tail;
 	}
 
+	public Label getHead() {
+		return head;
+	}
+
+	public LabelList getTail() {
+		return tail;
+	}
+
 	public LabelList(Label head) {
 		this(head, null);
 	}

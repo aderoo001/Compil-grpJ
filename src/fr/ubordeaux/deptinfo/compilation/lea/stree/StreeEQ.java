@@ -6,7 +6,7 @@ import fr.ubordeaux.deptinfo.compilation.lea.type.*;
 
 public class StreeEQ extends Stree {
 
-	private BINOP exp;
+	private final BINOP exp;
 
 
 	public StreeEQ(Stree left, Stree right) throws StreeException, TypeException {
@@ -20,8 +20,12 @@ public class StreeEQ extends Stree {
 	}
 
 	@Override
-	public Type getType(){
-		return new TypeExpression(Tag.BOOLEAN);
+	public Type getType() throws StreeException {
+		return new TypeExpression(
+				Tag.BOOLEAN,
+				this.exp.getDotLabel(),
+				getLeft().getType(),
+				getRight().getType());
 	}
 
 	@Override
