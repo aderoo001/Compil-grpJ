@@ -7,15 +7,22 @@ import fr.ubordeaux.deptinfo.compilation.lea.type.*;
 public class StreeRSHIFTAFF extends Stree {
 
 	private Stm stm;
+	private final Type type;
 
 	public StreeRSHIFTAFF(Stree left, Stree right) throws TypeException, StreeException {
 		super(left, right);
 		this.stm = new MOVE(left.getExp(), (new StreeRSHIFT(left, right)).getExp() );
+		this.type = new TypeExpression(Tag.SET);
 	}
 
 	@Override
 	public Stm getStm(){
 		return stm;
+	}
+
+	@Override
+	public Type getType() {
+		return type;
 	}
 
 	@Override
