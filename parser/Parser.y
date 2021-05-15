@@ -16,6 +16,7 @@
 
 %code imports {
 	import fr.ubordeaux.deptinfo.compilation.lea.type.*;
+	import fr.ubordeaux.deptinfo.compilation.lea.intermediate.temp.*;
 	import fr.ubordeaux.deptinfo.compilation.lea.environment.*;
 	import fr.ubordeaux.deptinfo.compilation.lea.stree.*;
 }
@@ -454,7 +455,18 @@ stm:
 	| "while" '(' expression ')' stm 					{ $$ = new StreeWHILE($3, $5); }
 	| "do" stm WHILE '(' expression ')' ';' 				{ $$ = new StreeDO($2, $5); }
 	| "for" '(' assigned_variable ':' expression ')' stm 			{ $$ = new StreeFOR($3, new StreeFORCONT($5, $7)); }
-	| "for" '(' assignment_stm ';' expression ';' simple_stm ')' stm 	{ $$ = new StreeFOR($3, new StreeFORCONT($5, new StreeFORCONT($7, $9))); }
+	| "for" '(' assignment_stm ';' expression ';' simple_stm ')' stm
+	{
+		Label label1 = new Label();
+		Label label2 = new Label();
+		Label label3 = new Label();
+
+		LabelList labelList3 = new LabelList(label3);
+		LabelList labelList2 = new LabelList(label2, labelList3);
+		LabelList labelList1 = new LabelList(label1, labelList2);
+
+		$$ = new StreeFOR($3, new StreeFORCONT($5, new StreeFORCONT($7, $9, labelList1), labelList1));
+	}
 	| "foreach" assigned_variable "in" expression stm 			{ $$ = new StreeFOREACH($2, new StreeFOREACHCONT($4, $5)); }
 	| block 								{ $$ = $1; }
 	;

@@ -2,6 +2,7 @@ package fr.ubordeaux.deptinfo.compilation.lea.stree;
 
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.*;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.temp.Label;
+import fr.ubordeaux.deptinfo.compilation.lea.intermediate.temp.LabelList;
 import fr.ubordeaux.deptinfo.compilation.lea.type.Tag;
 import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
@@ -10,10 +11,17 @@ import fr.ubordeaux.deptinfo.compilation.lea.type.TypeExpression;
 public class StreeFORCONT extends Stree {
 
 	private final Stm stm;
+	private LabelList labelList;
 
 	public StreeFORCONT(Stree left, Stree right) throws TypeException, StreeException {
 		super(left, right);
-		stm = generateIntermediateCode();
+		this.stm = generateIntermediateCode();
+	}
+
+	public StreeFORCONT(Stree left, Stree right, LabelList labelList) throws TypeException, StreeException {
+		super(left, right);
+		this.labelList = labelList;
+		this.stm = generateIntermediateCode();
 	}
 
 	@Override
@@ -48,6 +56,14 @@ public class StreeFORCONT extends Stree {
 		Label label1 = new Label();
 		Label label2 = new Label();
 		Label label3 = new Label();
+
+		if (this.labelList != null) {
+			label1 = this.labelList.getHead();
+			this.labelList = this.labelList.getTail();
+			label2 = this.labelList.getHead();
+			this.labelList = this.labelList.getTail();
+			label3 = this.labelList.getHead();
+		}
 
 		if (!this.getLeft()
 				.getType()
