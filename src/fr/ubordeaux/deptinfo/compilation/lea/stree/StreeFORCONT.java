@@ -26,6 +26,23 @@ public class StreeFORCONT extends Stree {
 		return stm;
 	}
 
+	private CJUMP.Op opSelector(String memo) {
+		switch (memo) {
+			case "!=":
+				return CJUMP.Op.NE;
+			case "<":
+				return CJUMP.Op.LT;
+			case ">":
+				return CJUMP.Op.GT;
+			case "<=":
+				return CJUMP.Op.LE;
+			case ">=":
+				return CJUMP.Op.GE;
+			default:
+				return CJUMP.Op.EQ;
+		}
+	}
+
 	@Override
 	public Stm generateIntermediateCode() throws StreeException {
 		Label label1 = new Label();
@@ -58,9 +75,9 @@ public class StreeFORCONT extends Stree {
 					new LABEL(label1),
 					new SEQ(
 							new CJUMP(
-									CJUMP.Op.EQ,
-									getLeft().getExp(),
-									new CONST(0),
+									this.opSelector(getLeft().getType().getName()),
+									this.getLeft().getLeft().getExp(),
+									this.getLeft().getRight().getExp(),
 									label2,
 									label3
 							),
@@ -72,9 +89,9 @@ public class StreeFORCONT extends Stree {
 					new LABEL(label1),
 					new SEQ(
 							new CJUMP(
-									CJUMP.Op.EQ,
-									getLeft().getExp(),
-									new CONST(0),
+									this.opSelector(getLeft().getType().getName()),
+									this.getLeft().getLeft().getExp(),
+									this.getLeft().getRight().getExp(),
 									label2,
 									label3
 							),
