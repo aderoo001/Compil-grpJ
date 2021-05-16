@@ -4,8 +4,5 @@ class main {
 		for(i:integer := 0; i <= 10; i--) {
 		    j += i;
 		}
-		for(i:integer := 0; i <= 10; i--) {
-		    j += i;
-		}
 	}
 }
