@@ -53,9 +53,9 @@ public class StreeFORCONT extends Stree {
 
 	@Override
 	public Stm generateIntermediateCode() throws StreeException {
-		Label label1 = new Label();
-		Label label2 = new Label();
-		Label label3 = new Label();
+		Label label1;
+		Label label2;
+		Label label3;
 
 		if (this.labelList != null) {
 			label1 = this.labelList.getHead();
@@ -63,6 +63,10 @@ public class StreeFORCONT extends Stree {
 			label2 = this.labelList.getHead();
 			this.labelList = this.labelList.getTail();
 			label3 = this.labelList.getHead();
+		} else {
+			label1 = new Label();
+			label2 = new Label();
+			label3 = new Label();
 		}
 
 		if (!this.getLeft()
@@ -128,7 +132,7 @@ public class StreeFORCONT extends Stree {
 		Type typeLeft = this.getLeft().getType();
 		Type typeRight = this.getRight().getType();
 		if (typeLeft != null && typeRight != null)
-			return true;
+			return this.getLeft().checkType();
 		else
 			throw new StreeException("Type error while checking null types !");
 	}

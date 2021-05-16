@@ -1,13 +1,6 @@
 package fr.ubordeaux.deptinfo.compilation.lea.stree;
 
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.CJUMP;
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.CONST;
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Exp;
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.JUMP;
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.LABEL;
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.SEQ;
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Stm;
-import fr.ubordeaux.deptinfo.compilation.lea.intermediate.CJUMP.Op;
+import fr.ubordeaux.deptinfo.compilation.lea.intermediate.*;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.temp.Label;
 import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
@@ -19,6 +12,23 @@ public class StreeWHILE extends Stree {
 	public StreeWHILE(Stree left, Stree right) throws StreeException, TypeException {
 		super(left, right);
 		this.stm = generateIntermediateCode();
+	}
+
+	private CJUMP.Op opSelector(String memo) {
+		switch (memo) {
+			case "!=":
+				return CJUMP.Op.NE;
+			case "<":
+				return CJUMP.Op.LT;
+			case ">":
+				return CJUMP.Op.GT;
+			case "<=":
+				return CJUMP.Op.LE;
+			case ">=":
+				return CJUMP.Op.GE;
+			default:
+				return CJUMP.Op.EQ;
+		}
 	}
 
 	@Override
@@ -34,12 +44,28 @@ public class StreeWHILE extends Stree {
 		//  goto label 1
 		// label3:
 		//  fin
-		return new SEQ(new LABEL(label1), 
-						new SEQ(new CJUMP(CJUMP.Op.EQ, getLeft().getExp(), new CONST(0), label2, label3),
-								new SEQ(new LABEL(label2),
-										new SEQ(getRight().getStm(), 
-												new SEQ(new JUMP(label1),
-														new LABEL(label3))))));
+		return new SEQ(
+				new LABEL(label1),
+				new SEQ(
+						new CJUMP(
+								this.opSelector(getLeft().getType().getName()),
+								getLeft().getLeft().getExp(),
+								getLeft().getRight().getExp(),
+								label2,
+								label3
+						),
+						new SEQ(
+								new LABEL(label2),
+								new SEQ(
+										getRight().getStm(),
+										new SEQ(
+												new JUMP(label1),
+												new LABEL(label3)
+										)
+								)
+						)
+				)
+		);
 
 	}
 
