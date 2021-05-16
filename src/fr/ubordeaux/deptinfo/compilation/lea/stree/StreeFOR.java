@@ -27,7 +27,7 @@ public class StreeFOR extends Stree {
 		Type typeLeft = getLeft().getType();
 		Type typeRight = getRight().getType();
 		if (typeLeft != null && typeRight != null)
-			return true;
+			return this.getLeft().checkType();
 		else
 			throw new StreeException("Type error while checking null types !");
 	}
