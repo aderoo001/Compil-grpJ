@@ -132,7 +132,7 @@ public class StreeFORCONT extends Stree {
 		Type typeLeft = this.getLeft().getType();
 		Type typeRight = this.getRight().getType();
 		if (typeLeft != null && typeRight != null)
-			return true;
+			return this.getLeft().checkType();
 		else
 			throw new StreeException("Type error while checking null types !");
 	}
